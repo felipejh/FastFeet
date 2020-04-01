@@ -58,26 +58,30 @@ export const Content = styled.div`
   border-radius: 4px;
   padding: 15px;
   margin: 25px auto;
-  height: 401px;
+  height: 350px;
   width: 900px;
+
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
 
   form {
-    div > label {
-      display: block;
+    div {
+      display: flex;
     }
-    /* label {
+    label {
       font-size: 14px;
       font-weight: bold;
       color: #444;
-      margin: 5px;
+      margin: 20px 20px 0 0;
+      float: left;
+    }
+
+    strong {
+      display: block;
     }
 
     input {
       height: 45px;
-      margin: 5px 0px 30px;
+      margin-bottom: 5px;
       padding: 12px 16px;
       border-radius: 4px;
       border: 1px solid #ddd;
@@ -93,34 +97,34 @@ export const Content = styled.div`
     span {
       color: #f00;
       align-self: flex-start;
-      margin: 0px 15px;
+      margin: 20px 5px;
       font-weight: bold;
-    } */
+    }
   }
 `;
 
 export const InputName = styled(Input)`
-  width: 100%;
+  width: 840px;
 `;
 
 export const InputStreet = styled(Input)`
-  width: 60%;
+  width: 515px;
 `;
 
 export const InputNumber = styled(Input)`
-  width: 10%;
+  width: 150px;
 `;
 
 export const InputComplement = styled(Input)`
-  width: 20%;
+  width: 140px;
 `;
 
 export const InputCity = styled(Input)`
-  width: 40%;
+  width: 270px;
 `;
 export const InputState = styled(Input)`
-  width: 20%;
+  width: 270px;
 `;
 export const InputCep = styled(Input)`
-  width: 20%;
+  width: 270px;
 `;

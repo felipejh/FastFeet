@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { MdNavigateBefore, MdCheck } from 'react-icons/md';
 import { Form } from '@rocketseat/unform';
@@ -100,53 +101,46 @@ export default function RecipientCRUD({ history }) {
           onSubmit={handleSubmit}
         >
           <div>
-            <InputName
-              name="name"
-              type="name"
-              label="Nome"
-              placeholder="Ludwig van Beethoven"
-            />
+            <label htmlFor="name2">
+              <strong id="name2">Nome</strong>
+              <InputName
+                name="name"
+                type="name"
+                placeholder="Ludwig van Beethoven"
+              />
+            </label>
           </div>
           <div>
-            <InputStreet
-              name="street"
-              type="text"
-              label="Rua"
-              placeholder="Rua Beethoven"
-            />
-
-            <InputNumber
-              name="number"
-              type="number"
-              label="Número"
-              placeholder="1729"
-            />
-            <InputComplement
-              name="complement"
-              type="text"
-              label="Complemento"
-              placeholder=""
-            />
+            <label>
+              <strong>Rua</strong>
+              <InputStreet
+                name="street"
+                type="text"
+                placeholder="Rua Beethoven"
+              />
+            </label>
+            <label>
+              <strong>Número</strong>
+              <InputNumber name="number" type="number" placeholder="1729" />
+            </label>
+            <label>
+              <strong>Complemento</strong>
+              <InputComplement name="complement" type="text" placeholder="" />
+            </label>
           </div>
           <div>
-            <InputCity
-              name="city"
-              type="text"
-              label="Cidade"
-              placeholder="Diadema"
-            />
-            <InputState
-              name="state"
-              type="text"
-              label="Estado"
-              placeholder="São Paulo"
-            />
-            <InputCep
-              name="zip_code"
-              type="text"
-              label="CEP"
-              placeholder="09960-580"
-            />
+            <label>
+              <strong>Cidade</strong>
+              <InputCity name="city" type="text" placeholder="Diadema" />
+            </label>
+            <label>
+              <strong>Estado</strong>
+              <InputState name="state" type="text" placeholder="São Paulo" />
+            </label>
+            <label>
+              <strong>CEP</strong>
+              <InputCep name="zip_code" type="text" placeholder="09960-580" />
+            </label>
           </div>
         </Form>
       </Content>
