@@ -1,8 +1,12 @@
-# FastFeet
+<h1 align="center">
+  <img alt="Fastfeet" title="Fastfeet" src=".github/logo.png" width="300px" />
+</h1>
 
-Steps to 
+It is a complete application (Back-end, Front-end and Mobile) for managing a carrier's deliveries.
+The WebApp is the administrator user interface. It is possible to register orders, deliverers and recipients.
+The MobileApp is the user interface for delivery peoples.
 
-## Configuration
+## :wrench: Configuration
 
 #### NodeJS & NPM
 Install the NVM:
@@ -72,7 +76,7 @@ MAIL_PASS=xxx
 ### Start the docker containers
 `docker start database redisbarber`
 
-## Backend
+## :page_facing_up: Backend
 
 In the backend project:
 
@@ -104,7 +108,7 @@ Ex.:
 `yarn dev`
 
 
-## Web
+## :computer: Web
 The Web application is the administrator user interface.
 It is possible to register orders, deliverers and recipients.
 
@@ -121,7 +125,7 @@ Used to make the requisitions to the backend (express).
 ### Screenshots
 ![](.github/web.gif)
 
-## Mobile
+## :iphone: Mobile
 The mobile application is the user interface for delivery peoples.
 
 Features:
