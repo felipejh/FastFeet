@@ -122,6 +122,9 @@ Password: 123456
 #### Axios
 Used to make the requisitions to the backend (express).
 
+#### Redux, Redux Saga, Redux Persist
+Used to store and persist the global states session and user profile.
+
 ### Screenshots
 ![](.github/web.gif)
 
@@ -144,6 +147,9 @@ Used to make the requisitions to the backend (express).
 
 #### React Native Camera
 Used to take a picture of the signature upon delivery of the order.
+
+#### Redux, Redux Saga, Redux Persist
+Used to store and persist the global states session and user profile.
 
 ### Screenshots
 ![](.github/mobile.gif)
