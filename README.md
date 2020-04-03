@@ -2,13 +2,13 @@
   <img alt="Fastfeet" title="Fastfeet" src=".github/logo.png" width="300px" />
 </h1>
 
-It is a complete application (Back-end, Front-end and Mobile) for managing a carrier's deliveries.
-The WebApp is the administrator user interface. It is possible to register orders, deliverers and recipients.
+It is a complete application (Back-end, Front-end and Mobile) for managing a carrier's deliveries.  
+The WebApp is the administrator user interface. It is possible to register orders, deliverers and recipients.  
 The MobileApp is the user interface for delivery peoples.
 
-**Backend:** NodeJS
-**Web:** ReactJS
-**Mobile:** React Native
+**Backend:** NodeJS  
+**Web:** ReactJS  
+**Mobile:** React Native  
 
 ## :wrench: Configuration
 
