@@ -6,6 +6,10 @@ It is a complete application (Back-end, Front-end and Mobile) for managing a car
 The WebApp is the administrator user interface. It is possible to register orders, deliverers and recipients.
 The MobileApp is the user interface for delivery peoples.
 
+**Backend:** NodeJS
+**Web:** ReactJS
+**Mobile:** React Native
+
 ## :wrench: Configuration
 
 #### NodeJS & NPM
