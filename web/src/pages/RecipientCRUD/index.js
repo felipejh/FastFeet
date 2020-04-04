@@ -2,6 +2,7 @@
 import React from 'react';
 import { MdNavigateBefore, MdCheck } from 'react-icons/md';
 import { Form } from '@rocketseat/unform';
+import InputMask from 'react-input-mask';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
@@ -139,7 +140,15 @@ export default function RecipientCRUD({ history }) {
             </label>
             <label>
               <strong>CEP</strong>
-              <InputCep name="zip_code" type="text" placeholder="09960-580" />
+              <InputMask mask="99999-999">
+                {() => (
+                  <InputCep
+                    name="zip_code"
+                    type="text"
+                    placeholder="09960-580"
+                  />
+                )}
+              </InputMask>
             </label>
           </div>
         </Form>
