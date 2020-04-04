@@ -129,6 +129,14 @@ Used to make the requisitions to the backend (express).
 #### Redux, Redux Saga, Redux Persist
 Used to store and persist the global states session and user profile.
 
+#### Rocketseat Unform
+Used to form validations.
+[Unform](https://github.com/Rocketseat/unform)
+
+#### React Input Mask
+Used to mask CEP.
+[React Input Mask](https://www.npmjs.com/package/react-input-mask)
+
 ### Screenshots
 ![](.github/web.gif)
 
