@@ -5,6 +5,7 @@ import api from '~/services/api';
 import history from '~/services/history';
 
 import ActionsButton from '~/components/ActionsButton';
+import PaginationButtons from '~/components/PaginationButtons';
 
 import {
   Container,
@@ -17,16 +18,22 @@ import {
 export default function Deliverymans() {
   const [deliverymans, setDeliverymans] = useState([]);
   const [name, setName] = useState('');
+  const [page, setPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(0);
+  const [totalDeliverymans, setTotaDeliverymans] = useState(0);
 
   async function loadDeliverymans() {
     const { data } = await api.get('deliverymans', {
       params: {
         name,
+        page,
       },
     });
 
-    if (data.length > 0) {
-      setDeliverymans(data);
+    if (data.deliverymans.length > 0) {
+      setDeliverymans(data.deliverymans);
+      setItemsPerPage(data.itemsPerPage);
+      setTotaDeliverymans(data.totalItems);
     } else {
       toast.error('Nenhum entregador encontrado');
     }
@@ -38,7 +45,7 @@ export default function Deliverymans() {
     }
     load();
     // eslint-disable-next-line
-  }, []);
+  }, [page]);
 
   function handleSearch(e) {
     if (e.key === 'Enter') {
@@ -52,6 +59,18 @@ export default function Deliverymans() {
 
   function handleEdit(deliveryman) {
     history.push({ pathname: '/deliverymanCRUD', state: { deliveryman } });
+  }
+
+  const renderPrev = page > 1;
+  const renderNext = itemsPerPage * page < totalDeliverymans;
+
+  function handlePrevPage() {
+    if (page === 1) return;
+    setPage(page - 1);
+  }
+
+  function handleNextPage() {
+    setPage(page + 1);
   }
 
   async function handleDelete(deliveryman) {
@@ -124,6 +143,13 @@ export default function Deliverymans() {
           ))}
         </tbody>
       </DeliverymanTable>
+      <PaginationButtons
+        page={page}
+        renderPrev={renderPrev}
+        renderNext={renderNext}
+        handlePrevPage={handlePrevPage}
+        handleNextPage={handleNextPage}
+      />
     </Container>
   );
 }
