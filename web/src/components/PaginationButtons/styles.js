@@ -8,13 +8,14 @@ export const Container = styled.div`
   justify-content: center;
   display: flex;
   flex: 1;
+  margin-top: 15px;
   flex-direction: row;
   text-align: center;
   border-radius: 4px;
 
   button {
     align-items: center;
-    margin: 15px;
+    margin: 0 15px;
     justify-content: center;
     height: 36px;
     width: 36px;
