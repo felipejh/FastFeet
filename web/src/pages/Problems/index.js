@@ -25,7 +25,7 @@ export default function Problems() {
       setProblems(response.data);
     } catch (err) {
       console.tron.error(err);
-      toast.error('Ocorreu um erro ao buscar os problemas');
+      toast.error('Nenhum problema encontrado');
     }
   }
 
