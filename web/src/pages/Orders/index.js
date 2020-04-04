@@ -9,6 +9,7 @@ import history from '~/services/history';
 
 import OrderStatus from '~/components/OrderStatus';
 import ActionsButton from '~/components/ActionsButton';
+import PaginationButtons from '~/components/PaginationButtons';
 
 import {
   Container,
@@ -27,6 +28,24 @@ export default function Orders() {
   const [product, setProduct] = useState('');
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
+  // pagination
+  const [page, setPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(0);
+  const [totalItems, setTotaItems] = useState(0);
+
+  const renderPrev = page > 1;
+  const renderNext =
+    itemsPerPage * page < totalItems && itemsPerPage <= orders.length;
+
+  function handlePrevPage() {
+    if (page === 1) return;
+    setPage(page - 1);
+  }
+
+  function handleNextPage() {
+    setPage(page + 1);
+  }
+
   const styleModal = {
     content: {
       top: '50%',
@@ -44,11 +63,12 @@ export default function Orders() {
     const { data } = await api.get('deliveries', {
       params: {
         product,
+        page,
       },
     });
 
     if (data) {
-      const newData = data.map(o => ({
+      const newData = data.deliveries.map(o => ({
         ...o,
         startDateFormatted: o.start_date
           ? format(parseISO(o.start_date), 'dd/MM/yyyy', {
@@ -64,6 +84,8 @@ export default function Orders() {
 
       if (newData.length > 0) {
         setOrders(newData);
+        setItemsPerPage(data.itemsPerPage);
+        setTotaItems(data.totalItems);
       } else {
         toast.error('Nenhuma encomenda encontrada');
       }
@@ -240,6 +262,13 @@ export default function Orders() {
           </div>
         </ContentModal>
       </Modal>
+      <PaginationButtons
+        page={page}
+        renderPrev={renderPrev}
+        renderNext={renderNext}
+        handlePrevPage={handlePrevPage}
+        handleNextPage={handleNextPage}
+      />
     </Container>
   );
 }

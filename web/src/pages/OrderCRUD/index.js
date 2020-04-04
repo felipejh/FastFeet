@@ -68,8 +68,8 @@ export default function OrderCRUD({ history }) {
     async function loadDeliverymans() {
       const response = await api.get('deliverymans');
 
-      if (response.data) {
-        const result = response.data.map(d => {
+      if (response.data.deliverymans) {
+        const result = response.data.deliverymans.map(d => {
           return { value: d.id, label: d.name };
         });
         setDeliverymans(result);

@@ -62,7 +62,9 @@ export default function Deliverymans() {
   }
 
   const renderPrev = page > 1;
-  const renderNext = itemsPerPage * page < totalDeliverymans;
+  const renderNext =
+    itemsPerPage * page < totalDeliverymans &&
+    itemsPerPage <= deliverymans.length;
 
   function handlePrevPage() {
     if (page === 1) return;

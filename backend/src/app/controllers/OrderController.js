@@ -10,9 +10,11 @@ import Queue from '../../lib/Queue';
 
 class OrderController {
   async index(req, res) {
-    const { product } = req.query;
+    const { product, page = 1 } = req.query;
 
     const whereStatement = {};
+
+    const pagination = 5;
 
     // Se foi informado produto, busca em todas as partes do nome de modo case-insensitive
     if (product) {
@@ -22,6 +24,8 @@ class OrderController {
     const deliveries = await Delivery.findAll({
       where: whereStatement,
       attributes: ['id', 'product', 'canceled_at', 'start_date', 'end_date', 'status'],
+      limit: pagination,
+      offset: (page - 1) * pagination,
       order: ['id'],
       include: [
         {
@@ -49,7 +53,13 @@ class OrderController {
       ]
     });
 
-    return res.json(deliveries);
+    const { total } = await Deliveryman.paginate();
+
+    return res.json({
+      deliveries,
+      itemsPerPage: pagination,
+      totalItems: total
+    });
   }
 
   async store(req, res) {
