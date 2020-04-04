@@ -4,19 +4,29 @@ import Recipient from '../models/Recipient';
 
 class RecipientController {
   async index(req, res) {
-    const { name } = req.query;
+    const { name, page = 1 } = req.query;
+
+    const pagination = 5;
 
     const whereStatement = {}
 
-    if (name){
-      whereStatement.name = {[Op.iLike]: `%${name}%`};
+    if (name) {
+      whereStatement.name = { [Op.iLike]: `%${name}%` };
     }
 
     const recipients = await Recipient.findAll({
       where: whereStatement,
+      limit: pagination,
+      offset: (page - 1) * pagination,
     });
 
-    return res.json(recipients);
+    const { total } = await Recipient.paginate();
+
+    return res.json({
+      recipients,
+      itemsPerPage: pagination,
+      totalItems: total
+    });
   }
 
   async store(req, res) {
@@ -65,7 +75,7 @@ class RecipientController {
 
   }
 
-  async update(req, res){
+  async update(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string(),
       street: Yup.string(),
@@ -93,7 +103,7 @@ class RecipientController {
     return res.status(200).json(newRecipient)
   }
 
-  async delete(req, res){
+  async delete(req, res) {
     const recipient = await Recipient.findByPk(req.params.id);
 
     if (!recipient) {

@@ -100,7 +100,7 @@ export default function Orders() {
     }
     load();
     // eslint-disable-next-line
-  }, []);
+  }, [page]);
 
   function handleSearch(e) {
     if (e.key === 'Enter') {

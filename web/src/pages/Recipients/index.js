@@ -5,6 +5,7 @@ import api from '~/services/api';
 import history from '~/services/history';
 
 import ActionsButton from '~/components/ActionsButton';
+import PaginationButtons from '~/components/PaginationButtons';
 
 import {
   Container,
@@ -18,19 +19,40 @@ export default function Recipients() {
   const [recipients, setRecipients] = useState([]);
   const [name, setName] = useState('');
 
+  // pagination
+  const [page, setPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(0);
+  const [totalItems, setTotaItems] = useState(0);
+
+  const renderPrev = page > 1;
+  const renderNext =
+    itemsPerPage * page < totalItems && itemsPerPage <= recipients.length;
+
+  function handlePrevPage() {
+    if (page === 1) return;
+    setPage(page - 1);
+  }
+
+  function handleNextPage() {
+    setPage(page + 1);
+  }
+
   async function loadRecipients() {
     const { data } = await api.get('recipients', {
       params: {
         name,
+        page,
       },
     });
 
-    if (data.length > 0) {
-      const result = data.map(r => ({
+    if (data.recipients.length > 0) {
+      const result = data.recipients.map(r => ({
         ...r,
         address: `${r.street}, ${r.number}, ${r.city} - ${r.state}`,
       }));
       setRecipients(result);
+      setItemsPerPage(data.itemsPerPage);
+      setTotaItems(data.totalItems);
     } else {
       toast.error('Nenhum destinatário encontrado');
     }
@@ -42,7 +64,7 @@ export default function Recipients() {
     }
     load();
     // eslint-disable-next-line
-  }, []);
+  }, [page]);
 
   function handleSearch(e) {
     if (e.key === 'Enter') {
@@ -117,6 +139,13 @@ export default function Recipients() {
           ))}
         </tbody>
       </DeliverymanTable>
+      <PaginationButtons
+        page={page}
+        renderPrev={renderPrev}
+        renderNext={renderNext}
+        handlePrevPage={handlePrevPage}
+        handleNextPage={handleNextPage}
+      />
     </Container>
   );
 }
