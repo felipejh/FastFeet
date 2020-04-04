@@ -5,9 +5,11 @@ import File from '../models/File';
 
 class DeliverymansController {
   async index(req, res) {
-    const { name } = req.query;
+    const { name, page = 1 } = req.query;
 
     const whereStatement = {};
+
+    const pagination = 5;
 
     if (name) {
       whereStatement.name = { [ Op.iLike ]: `%${name}%` };
@@ -16,6 +18,8 @@ class DeliverymansController {
     const deliverymans = await Deliveryman.findAll({
       where: whereStatement,
       attributes: ['id', 'name', 'email'],
+      limit: pagination,
+      offset: (page - 1) * pagination,
       order: ['id'],
       include: [
         {
@@ -25,8 +29,14 @@ class DeliverymansController {
         }
       ]
     });
+    // eslint-disable-next-line no-unused-vars
+    const { docs, pages, total } = await Deliveryman.paginate();
 
-    return res.json(deliverymans);
+    return res.json({
+      deliverymans,
+      itemsPerPage: pagination,
+      totalItems: total
+    });
   }
 
   async store(req, res) {
