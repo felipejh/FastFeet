@@ -9,16 +9,12 @@ export function* signIn({ payload }) {
   try {
     const { deliverymanId } = payload;
 
-    const response = yield call(
-      api.get,
-      `deliveryman/${deliverymanId}/pending`
-    );
-
-    const { deliveryman } = response.data[0];
+    const response = yield call(api.post, `/sessionsDeliveryman`, {
+      deliveryman_id: deliverymanId,
+    });
 
     yield delay(500); // Delay para testar o loading
-
-    yield put(signInSuccess(deliveryman));
+    yield put(signInSuccess(response.data));
   } catch (err) {
     Alert.alert(
       'Falha na autenticação',
