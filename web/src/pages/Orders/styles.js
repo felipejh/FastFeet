@@ -157,4 +157,9 @@ export const Signature = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 15px;
+
+  img {
+    width: 40%;
+    height: 40%;
+  }
 `;
