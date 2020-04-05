@@ -49,8 +49,8 @@ class CollectController {
     /**
      * Check if hour is between 8h and 18h
      */
-    let startTime = "18:00";
-    let endTime = "23:59";
+    let startTime = "08:00";
+    let endTime = "18:00";
 
 
     const [startHour, startMinute] = startTime.split(':');
