@@ -161,6 +161,7 @@ export default function Orders() {
   }
 
   function handleFilterProblems() {
+    setPage(1);
     setFilterProblemas(!filterProblems);
   }
 
