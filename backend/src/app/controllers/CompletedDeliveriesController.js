@@ -26,6 +26,9 @@ class CompletedDeliveriesController {
         }
       ]
     });
+    // Retorna total de itens para tratamento do onEndReached do FlatList do RN
+    const { total } = await Delivery.paginate();
+    res.set('x-total-count', total);
 
     return res.json(delivery);
   }
