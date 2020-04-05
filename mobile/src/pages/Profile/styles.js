@@ -15,10 +15,11 @@ export const Avatar = styled.Image`
 `;
 
 export const AvatarLetters = styled.View`
-  width: 68px;
-  height: 68px;
-  border-radius: 34px;
+  width: 136px;
+  height: 136px;
+  border-radius: 68px;
   align-items: center;
+  align-self: center;
   justify-content: center;
   background: #f4effc;
 `;
