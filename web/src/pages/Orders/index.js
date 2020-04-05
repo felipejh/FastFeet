@@ -210,7 +210,7 @@ export default function Orders() {
               <td>
                 <ActionsButton
                   view
-                  edit
+                  edit={order.status === 'PENDENTE'}
                   remove
                   actionView={() => openModal(order.id)}
                   actionEdit={() => handleEdit(order)}
