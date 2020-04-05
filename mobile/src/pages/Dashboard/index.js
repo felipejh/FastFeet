@@ -57,12 +57,17 @@ export default function Dashboard({ navigation }) {
 
   const [page, setPage] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
+  const [totalItems, setTotalItems] = useState(0);
 
   const deliveryman = useSelector(state => state.user.profile);
 
   const letters = useMemo(() => {
     return deliveryman.name.replace(/[^a-zA-Z- ]/g, '').match(/\b\w/g);
   }, [deliveryman]);
+
+  const hasScroll = useMemo(() => {
+    return totalItems > 0 && orders.length >= totalItems;
+  }, [totalItems]);
 
   async function loadPending(pageNumber = 1) {
     setLoading(true);
@@ -74,6 +79,8 @@ export default function Dashboard({ navigation }) {
       });
 
       if (response.data.length > 0) {
+        setTotalItems(response.headers['x-total-count']);
+
         const newOrders = response.data.map(order => {
           const date = order.start_date ? order.start_date : order.createdAt;
 
@@ -107,6 +114,7 @@ export default function Dashboard({ navigation }) {
       );
 
       if (response.data.length > 0) {
+        setTotalItems(response.headers['x-total-count']);
         const newOrders = response.data.map(order => {
           const date = order.start_date ? order.start_date : order.createdAt;
 
@@ -145,11 +153,13 @@ export default function Dashboard({ navigation }) {
   }
 
   function handlePending() {
+    setOrders([]);
     setVisiblePending(true);
     setVisibleDelivered(false);
   }
 
   function handleDelivered() {
+    setOrders([]);
     setVisiblePending(false);
     setVisibleDelivered(true);
   }
@@ -161,10 +171,12 @@ export default function Dashboard({ navigation }) {
   function loadMore() {
     console.tron.log('LOAD_MORE');
     if (visiblePending) {
+      if (!hasScroll) return;
       loadPending(page + 1);
     }
 
     if (visibleDelivered) {
+      if (!hasScroll) return;
       loadDelivered(page + 1);
     }
   }
