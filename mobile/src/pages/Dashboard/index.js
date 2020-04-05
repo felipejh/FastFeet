@@ -67,10 +67,6 @@ export default function Dashboard({ navigation }) {
     return deliveryman.name.replace(/[^a-zA-Z- ]/g, '').match(/\b\w/g);
   }, [deliveryman]);
 
-  // const hasScroll = useMemo(() => {
-  //   return totalItems > 0 && orders.length >= totalItems;
-  // }, [orders]);
-
   async function loadPending(pageNumber = 1) {
     setLoading(true);
     try {
