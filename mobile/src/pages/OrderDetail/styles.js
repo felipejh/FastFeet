@@ -76,6 +76,16 @@ export const Actions = styled.View`
   height: 85px;
 `;
 
+export const WithdrawOrder = styled.TouchableOpacity`
+  background: #f8f9fd;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+
+  padding: 10px;
+  flex: 1;
+  align-items: center;
+`;
+
 export const InformProblem = styled.TouchableOpacity`
   background: #f8f9fd;
   border-top-left-radius: 4px;

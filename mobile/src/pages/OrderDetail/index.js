@@ -1,10 +1,12 @@
 import React, { useMemo } from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import api from '~/services/api';
 
 import colors from '~/styles/colors';
 
@@ -69,6 +71,48 @@ export default function OrderDetail({ navigation, route }) {
     ? 'Visualizar confirmação'
     : 'Confirmar entrega';
 
+  async function withdrawOrder() {
+    try {
+      await api.put(`/deliveryman/${order.deliveryman_id}/collect`, {
+        delivery_id: order.id,
+      });
+
+      Alert.alert('Sucesso!', 'Entrega retirada.', [
+        {
+          text: 'OK',
+          onPress: () => {
+            navigation.navigate('Dashboard');
+          },
+        },
+      ]);
+    } catch (err) {
+      if (err.response) {
+        Alert.alert('Falha no processo', err.response.data.error);
+        console.tron.error(err.response.data.error);
+      }
+
+      Alert.alert(
+        'Falha no processo',
+        'Ocorreu um erro ao retirar e encomenda'
+      );
+    }
+  }
+
+  function handleWithdraw() {
+    Alert.alert('Atenção', 'Confirma a retirada da encomenda?', [
+      {
+        text: 'Não',
+        onPress: () => {},
+      },
+      {
+        text: 'Sim',
+        onPress: () => {
+          withdrawOrder();
+        },
+      },
+    ]);
+  }
+
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor={colors.primary} />
@@ -114,31 +158,52 @@ export default function OrderDetail({ navigation, route }) {
           </Situation>
 
           <Actions>
-            <InformProblem
-              disabled={delivered}
-              onPress={() => navigation.navigate('InformProblem', { order })}
-            >
-              <MCIcon name="close-circle-outline" size={25} color="#E74040" />
-              <ButtonText>Informar um problema</ButtonText>
-            </InformProblem>
+            {order.status === 'PENDENTE' ? (
+              <InformProblem disabled={delivered} onPress={handleWithdraw}>
+                <MCIcon name="package-down" size={30} color="green" />
+                <ButtonText>Retirar entrega</ButtonText>
+              </InformProblem>
+            ) : (
+              <>
+                <InformProblem
+                  disabled={delivered}
+                  onPress={() =>
+                    navigation.navigate('InformProblem', { order })
+                  }
+                >
+                  <MCIcon
+                    name="close-circle-outline"
+                    size={25}
+                    color="#E74040"
+                  />
+                  <ButtonText>Informar um problema</ButtonText>
+                </InformProblem>
 
-            <ViewProblem
-              onPress={() => navigation.navigate('ViewProblems', { order })}
-            >
-              <MCIcon name="information-outline" size={25} color="#E7BA40" />
-              <ButtonText>Visualizar problemas</ButtonText>
-            </ViewProblem>
+                <ViewProblem
+                  onPress={() => navigation.navigate('ViewProblems', { order })}
+                >
+                  <MCIcon
+                    name="information-outline"
+                    size={25}
+                    color="#E7BA40"
+                  />
+                  <ButtonText>Visualizar problemas</ButtonText>
+                </ViewProblem>
 
-            <ConfirmDelivery
-              onPress={() => navigation.navigate('ConfirmDelivery', { order })}
-            >
-              <MCIcon
-                name="check-circle-outline"
-                size={25}
-                color={colors.primary}
-              />
-              <ButtonText>{textConfirmDelivery}</ButtonText>
-            </ConfirmDelivery>
+                <ConfirmDelivery
+                  onPress={() =>
+                    navigation.navigate('ConfirmDelivery', { order })
+                  }
+                >
+                  <MCIcon
+                    name="check-circle-outline"
+                    size={25}
+                    color={colors.primary}
+                  />
+                  <ButtonText>{textConfirmDelivery}</ButtonText>
+                </ConfirmDelivery>
+              </>
+            )}
           </Actions>
         </Scroll>
       </Container>
