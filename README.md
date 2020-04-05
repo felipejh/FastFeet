@@ -156,8 +156,10 @@ Features:
 
 The authentication is the deliveryman id.
 
-> Configure the API ip address in:
-~/src/services/api.js
+Before run:
+
+- Configure the API ip address in ```~/src/services/api.js```
+- If you are running on android, run this commando in the terminal ```adb reverse tcp:3333 tcp:3333``` This is necessary to show the images on the app.
 
 ### Third-part libraries
 #### Axios
