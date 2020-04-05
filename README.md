@@ -63,7 +63,7 @@ Encoding: UTF8
 #### Redis
 Redis is used to emails queue.
 
-`docker run --name redisbarber -p 6379:6379 -d -t redis:alpine` 
+`docker run --name redisfastfeet -p 6379:6379 -d -t redis:alpine` 
 
 ### Mailtrap
 Create your account in [mailtrap.io](https://mailtrap.io/)
@@ -78,7 +78,7 @@ MAIL_PASS=xxx
 ```
 
 ### Start the docker containers
-`docker start database redisbarber`
+`docker start database redisfastfeet`
 
 ## :page_facing_up: Backend
 
