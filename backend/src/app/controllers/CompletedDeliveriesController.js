@@ -27,7 +27,9 @@ class CompletedDeliveriesController {
       ]
     });
     // Retorna total de itens para tratamento do onEndReached do FlatList do RN
-    const { total } = await Delivery.paginate();
+    const total = await Delivery.count({
+      where: { deliveryman_id, canceled_at: null, end_date: { [Op.not]: null } },
+    })
     res.set('x-total-count', total);
 
     return res.json(delivery);

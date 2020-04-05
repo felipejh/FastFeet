@@ -57,7 +57,9 @@ export default function Dashboard({ navigation }) {
 
   const [page, setPage] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
-  const [totalItems, setTotalItems] = useState(0);
+  const [totalItemsPending, setTotalItemsPending] = useState(0);
+  const [totalItemsDelivered, setTotalItemsDelivered] = useState(0);
+  const [hasScroll, setHasScroll] = useState(false);
 
   const deliveryman = useSelector(state => state.user.profile);
 
@@ -65,9 +67,9 @@ export default function Dashboard({ navigation }) {
     return deliveryman.name.replace(/[^a-zA-Z- ]/g, '').match(/\b\w/g);
   }, [deliveryman]);
 
-  const hasScroll = useMemo(() => {
-    return totalItems > 0 && orders.length >= totalItems;
-  }, [totalItems]);
+  // const hasScroll = useMemo(() => {
+  //   return totalItems > 0 && orders.length >= totalItems;
+  // }, [orders]);
 
   async function loadPending(pageNumber = 1) {
     setLoading(true);
@@ -79,7 +81,7 @@ export default function Dashboard({ navigation }) {
       });
 
       if (response.data.length > 0) {
-        setTotalItems(response.headers['x-total-count']);
+        setTotalItemsPending(response.headers['x-total-count']);
 
         const newOrders = response.data.map(order => {
           const date = order.start_date ? order.start_date : order.createdAt;
@@ -95,6 +97,12 @@ export default function Dashboard({ navigation }) {
         setOrders(pageNumber >= 2 ? [...orders, ...newOrders] : newOrders);
         setPage(pageNumber);
         setRefreshing(false);
+
+        if (pageNumber === 1) {
+          const h =
+            totalItemsPending > 0 && totalItemsPending > response.data.length;
+          setHasScroll(h);
+        }
       }
     } catch (err) {
       Alert.alert('Ops...', 'Ocorreu um erro ao busca as entregas pendentes');
@@ -114,7 +122,7 @@ export default function Dashboard({ navigation }) {
       );
 
       if (response.data.length > 0) {
-        setTotalItems(response.headers['x-total-count']);
+        setTotalItemsDelivered(response.headers['x-total-count']);
         const newOrders = response.data.map(order => {
           const date = order.start_date ? order.start_date : order.createdAt;
 
@@ -129,6 +137,13 @@ export default function Dashboard({ navigation }) {
         setOrders(pageNumber >= 2 ? [...orders, ...newOrders] : newOrders);
         setPage(pageNumber);
         setRefreshing(false);
+
+        if (pageNumber === 1) {
+          const h =
+            totalItemsDelivered > 0 &&
+            totalItemsDelivered > response.data.length;
+          setHasScroll(h);
+        }
       }
     } catch (err) {
       Alert.alert(
@@ -152,35 +167,6 @@ export default function Dashboard({ navigation }) {
     dispatch(signOut());
   }
 
-  function handlePending() {
-    setOrders([]);
-    setVisiblePending(true);
-    setVisibleDelivered(false);
-  }
-
-  function handleDelivered() {
-    setOrders([]);
-    setVisiblePending(false);
-    setVisibleDelivered(true);
-  }
-
-  function handleDetails(item) {
-    navigation.navigate('OrderDetail', { item });
-  }
-
-  function loadMore() {
-    console.tron.log('LOAD_MORE');
-    if (visiblePending) {
-      if (!hasScroll) return;
-      loadPending(page + 1);
-    }
-
-    if (visibleDelivered) {
-      if (!hasScroll) return;
-      loadDelivered(page + 1);
-    }
-  }
-
   function refreshList() {
     setOrders([]);
 
@@ -190,6 +176,38 @@ export default function Dashboard({ navigation }) {
 
     if (visibleDelivered) {
       loadDelivered();
+    }
+  }
+
+  function handlePending() {
+    if (!visiblePending) {
+      setOrders([]);
+      setVisiblePending(true);
+      setVisibleDelivered(false);
+    }
+  }
+
+  function handleDelivered() {
+    if (!visibleDelivered) {
+      setOrders([]);
+      setVisiblePending(false);
+      setVisibleDelivered(true);
+    }
+  }
+
+  function handleDetails(item) {
+    navigation.navigate('OrderDetail', { item });
+  }
+
+  function loadMore() {
+    if (visiblePending) {
+      if (!hasScroll) return;
+      loadPending(page + 1);
+    }
+
+    if (visibleDelivered) {
+      if (!hasScroll) return;
+      loadDelivered(page + 1);
     }
   }
 

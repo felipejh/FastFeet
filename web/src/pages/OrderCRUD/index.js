@@ -58,7 +58,7 @@ export default function OrderCRUD({ history }) {
       const response = await api.get('recipients');
 
       if (response.data) {
-        const result = response.data.map(r => {
+        const result = response.data.recipients.map(r => {
           return { value: r.id, label: r.name };
         });
         setRecipients(result);

@@ -53,7 +53,7 @@ class OrderController {
       ]
     });
 
-    const { total } = await Deliveryman.paginate();
+    const { total } = await Delivery.paginate();
 
     return res.json({
       deliveries,
