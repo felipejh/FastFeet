@@ -14,12 +14,14 @@ import FinishDeliveryController from './app/controllers/FinishDeliveryController
 import ProblemsController from './app/controllers/ProblemsController';
 import ProblemsDeliveryController from './app/controllers/ProblemsDeliveryController';
 import CancelDeliveryController from './app/controllers/CancelDeliveryController';
+import SessionDeliverymanController from './app/controllers/SessionDeliverymanController';
 
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
 const upload = multer(multerConfig);
 
+routes.post('/sessionsDeliveryman', SessionDeliverymanController.store);
 routes.post('/sessions', SessionController.store);
 
 routes.get('/deliveryman/:id/pending', PendingDeliveriesController.index);
