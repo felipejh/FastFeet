@@ -86,7 +86,7 @@ export const ActionList = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      background: 'none';
+      background: #fff;
       border: 0;
       border-radius: 4px;
       color: #999;
