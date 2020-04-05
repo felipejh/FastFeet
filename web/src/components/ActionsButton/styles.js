@@ -47,7 +47,7 @@ export const ActionList = styled.div`
   padding: 15px 5px;
   text-align: left;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 1px 15px #666;
   display: ${props => (props.visible ? 'block' : 'none')};
   z-index: 1;
   &::before {
