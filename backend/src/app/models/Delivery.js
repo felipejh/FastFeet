@@ -10,17 +10,17 @@ class Delivery extends Model {
       end_date: Sequelize.DATE,
       status: {
         type: Sequelize.VIRTUAL,
-        get(){
+        get() {
 
-          if (this.canceled_at){
+          if (this.canceled_at) {
             return 'CANCELADA';
           }
 
-          if (this.end_date){
+          if (this.end_date) {
             return 'ENTREGUE';
           }
 
-          if (this.start_date){
+          if (this.start_date) {
             return 'RETIRADA';
           }
 
@@ -38,6 +38,7 @@ class Delivery extends Model {
     this.belongsTo(models.File, { foreignKey: 'signature_id', as: 'signature' });
     this.belongsTo(models.Recipient, { foreignKey: 'recipient_id', as: 'recipient' });
     this.belongsTo(models.Deliveryman, { foreignKey: 'deliveryman_id', as: 'deliveryman' });
+    this.hasMany(models.DeliveryProblem, { as: 'problems' });
   }
 }
 

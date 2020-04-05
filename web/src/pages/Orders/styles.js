@@ -47,9 +47,11 @@ export const SearchContainer = styled.div`
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 4px;
+  margin-right: 10px;
 
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 10px;
 
   input {
@@ -57,9 +59,23 @@ export const SearchContainer = styled.div`
     border: none;
     color: #999;
 
+    & > input {
+    }
+
     &::placeholder {
       color: #999;
     }
+  }
+`;
+
+export const Filters = styled.div`
+  display: flex;
+  align-items: center;
+
+  span {
+    font-size: 14px;
+    color: #666;
+    margin-left: 5px;
   }
 `;
 

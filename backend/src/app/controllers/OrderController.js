@@ -4,13 +4,14 @@ import Delivery from '../models/Delivery';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
+import DeliveryProblem from '../models/DeliveryProblem';
 
 import NewDeliveryMail from '../jobs/NewDeliveryMail';
 import Queue from '../../lib/Queue';
 
 class OrderController {
   async index(req, res) {
-    const { product, page = 1 } = req.query;
+    const { product, page = 1, filterProblems = false } = req.query;
 
     const whereStatement = {};
 
@@ -49,6 +50,11 @@ class OrderController {
           model: File,
           as: 'signature',
           attributes: ['id', 'path', 'url'],
+        },
+        {
+          model: DeliveryProblem,
+          as: 'problems',
+          required: filterProblems === 'true'
         },
       ]
     });

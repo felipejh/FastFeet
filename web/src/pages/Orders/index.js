@@ -19,6 +19,7 @@ import {
   OrderTable,
   ContentModal,
   Signature,
+  Filters,
 } from './styles';
 
 export default function Orders() {
@@ -32,6 +33,9 @@ export default function Orders() {
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(0);
   const [totalItems, setTotaItems] = useState(0);
+
+  // Filters
+  const [filterProblems, setFilterProblemas] = useState(false);
 
   const renderPrev = page > 1;
   const renderNext =
@@ -64,6 +68,7 @@ export default function Orders() {
       params: {
         product,
         page,
+        filterProblems,
       },
     });
 
@@ -100,7 +105,7 @@ export default function Orders() {
     }
     load();
     // eslint-disable-next-line
-  }, [page]);
+  }, [page, filterProblems]);
 
   function handleSearch(e) {
     if (e.key === 'Enter') {
@@ -154,19 +159,31 @@ export default function Orders() {
     }
   }
 
+  function handleFilterProblems() {
+    setFilterProblemas(!filterProblems);
+  }
+
   return (
     <Container>
       <PageTitle>Gestão de encomendas</PageTitle>
       <PageControls>
-        <SearchContainer>
-          <MdSearch size={20} color="#999" />
+        <Filters>
+          <SearchContainer>
+            <MdSearch size={20} color="#999" />
+            <input
+              placeholder="Busca por encomendas"
+              onKeyPress={handleSearch}
+              value={product}
+              onChange={e => setProduct(e.target.value)}
+            />
+          </SearchContainer>
           <input
-            placeholder="Busca por encomendas"
-            onKeyPress={handleSearch}
-            value={product}
-            onChange={e => setProduct(e.target.value)}
+            type="checkbox"
+            onChange={handleFilterProblems}
+            checked={filterProblems}
           />
-        </SearchContainer>
+          <span>Encomendas com problema</span>
+        </Filters>
         <button type="button" onClick={handleRegister}>
           <MdAdd size={20} color="#fff" />
           <strong>Cadastrar</strong>
