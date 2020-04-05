@@ -1,12 +1,24 @@
 import DeliveryProblem from '../models/DeliveryProblem';
 
-class ProblemsController{
-  async index(req, res){
+class ProblemsController {
+  async index(req, res) {
+    const { page = 1 } = req.query;
+
+    const pagination = 5;
+
     const problems = await DeliveryProblem.findAll({
-      attributes:['id', 'delivery_id', 'description'],
+      limit: pagination,
+      offset: (page - 1) * pagination,
+      attributes: ['id', 'delivery_id', 'description'],
     });
 
-    return res.json(problems);
+    const { total } = await DeliveryProblem.paginate();
+
+    return res.json({
+      problems,
+      itemsPerPage: pagination,
+      totalItems: total
+    });
   }
 }
 
