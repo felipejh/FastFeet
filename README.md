@@ -122,6 +122,9 @@ User: admin@fastfeet.com
 Password: 123456
 ```
 
+> Configure the API ip address in:
+~/src/services/api.js
+
 ### Third-part libraries
 #### Axios
 Used to make the requisitions to the backend (express).
@@ -152,6 +155,9 @@ Features:
 - Confirm delivery
 
 The authentication is the deliveryman id.
+
+> Configure the API ip address in:
+~/src/services/api.js
 
 ### Third-part libraries
 #### Axios
