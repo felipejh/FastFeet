@@ -4,6 +4,7 @@ import api from '~/services/api';
 import ModalProblems from './ModalProblems';
 
 import ActionsButton from '~/components/ActionsButton';
+import PaginationButtons from '~/components/PaginationButtons';
 
 import {
   Container,
@@ -19,10 +20,30 @@ export default function Problems() {
   const [modalVisible, setModalVisible] = useState(false);
   const [problemModal, setProblemModal] = useState('');
 
+  // pagination
+  const [page, setPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(0);
+  const [totalItems, setTotaItems] = useState(0);
+
+  const renderPrev = page > 1;
+  const renderNext =
+    itemsPerPage * page < totalItems && itemsPerPage <= problems.length;
+
+  function handlePrevPage() {
+    if (page === 1) return;
+    setPage(page - 1);
+  }
+
+  function handleNextPage() {
+    setPage(page + 1);
+  }
+
   async function loadProblems() {
     try {
-      const response = await api.get('problems');
-      setProblems(response.data);
+      const { data } = await api.get('problems');
+      setProblems(data.problems);
+      setItemsPerPage(data.itemsPerPage);
+      setTotaItems(data.totalItems);
     } catch (err) {
       console.tron.error(err);
       toast.error('Nenhum problema encontrado');
@@ -34,8 +55,7 @@ export default function Problems() {
       await loadProblems();
     }
     load();
-    // eslint-disable-next-line
-  }, []);
+  }, [page]);
 
   function handleView(problemDescription) {
     setProblemModal(problemDescription);
@@ -94,6 +114,14 @@ export default function Problems() {
         description={problemModal}
         isOpen={modalVisible}
         onRequestClose={handleCloseModal}
+      />
+
+      <PaginationButtons
+        page={page}
+        renderPrev={renderPrev}
+        renderNext={renderNext}
+        handlePrevPage={handlePrevPage}
+        handleNextPage={handleNextPage}
       />
     </Container>
   );
