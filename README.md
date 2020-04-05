@@ -111,6 +111,9 @@ Ex.:
 ### Run the API
 `yarn dev`
 
+To run the BeQueue
+```yarn queue```
+
 
 ## :computer: Web
 The Web application is the administrator user interface.
