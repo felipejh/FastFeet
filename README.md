@@ -144,7 +144,7 @@ Used to mask CEP.
 [React Input Mask](https://www.npmjs.com/package/react-input-mask)
 
 ### Screenshots
-![](.github/web.gif)
+![](.github/web-demo.gif)
 
 ## :iphone: Mobile
 The mobile application is the user interface for delivery peoples.
