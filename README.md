@@ -108,10 +108,16 @@ Configure your DSN in `~/src/.env`
 Ex.:
 `SENTRY_DSN=xxxxxx`
 
-### Run the API
-`yarn dev`
+### Run
 
-To run the BeQueue
+##### Before run:
+
+- Install dependencies with ```yarn install```
+
+##### Running API
+```yarn dev```
+
+##### Running the BeQueue
 ```yarn queue```
 
 
@@ -125,8 +131,16 @@ User: admin@fastfeet.com
 Password: 123456
 ```
 
-> Configure the API ip address in:
-~/src/services/api.js
+### Run
+
+##### Before run:
+
+- Configure the API ip address in ```~/src/services/api.js```
+- Install dependencies with ```yarn install```
+
+##### Running:
+```yarn start```
+
 
 ### Third-part libraries
 #### Axios
@@ -159,10 +173,19 @@ Features:
 
 The authentication is the deliveryman id.
 
-Before run:
+### Run
+
+##### Before run:
 
 - Configure the API ip address in ```~/src/services/api.js```
 - If you are running on android, run this commando in the terminal ```adb reverse tcp:3333 tcp:3333``` This is necessary to show the images on the app.
+- Install dependencies with ```yarn install```
+
+##### Running on iOS:
+```react-native run-ios```
+
+##### Running on Android:
+```react-native run-android```
 
 ### Third-part libraries
 #### Axios
