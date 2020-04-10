@@ -33,6 +33,8 @@ routes.put('/deliveryman/:deliveryman_id/finish', upload.single('file'), FinishD
 routes.get('/delivery/:delivery_id/problems', ProblemsDeliveryController.index);
 routes.post('/delivery/:delivery_id/problems', ProblemsDeliveryController.store);
 
+routes.get('/', (req, res) => res.send( "ok"));
+
 // Middlware global somente para as rotas que estão abaixo desta linha
 routes.use(authMiddleware);
 
