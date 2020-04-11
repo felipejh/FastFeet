@@ -19,7 +19,6 @@ import ConfirmDelivery from '~/pages/ConfirmDelivery';
 import Profile from '~/pages/Profile';
 
 const Stack = createStackNavigator();
-const StackTeste = createStackNavigator();
 const Tabs = createBottomTabNavigator();
 
 function CameraStack() {
@@ -42,7 +41,7 @@ function DashboardStack() {
       screenOptions={{
         headerTransparent: false,
         headerTintColor: '#fff',
-           headerLeftContainerStyle: {
+        headerLeftContainerStyle: {
           marginLeft: 20,
         },
       }}
@@ -123,59 +122,6 @@ function DashboardStack() {
     </Stack.Navigator>
   );
 }
-
-function Tab() {
-  return (
-    <Tabs.Navigator
-      tabBarOptions={{
-        activeTintColor: colors.primary,
-        inactiveTintColor: '#999',
-        style: {
-          backgroundColor: '#fff',
-        },
-        keyboardHidesTabBar: true,
-      }}
-    >
-      <Tabs.Screen
-        name="DashboardStack"
-        component={DashboardStack}
-        options={{
-          unmountOnBlur: true,
-          tabBarLabel: 'Entregas',
-          // eslint-disable-next-line react/prop-types
-          tabBarIcon: ({ color }) => (
-            <Icon name="reorder" size={30} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          tabBarLabel: 'Meu perfil',
-          // eslint-disable-next-line react/prop-types
-          tabBarIcon: ({ color }) => (
-            <Icon name="account-circle" size={30} color={color} />
-          ),
-        }}
-      />
-    </Tabs.Navigator>
-  );
-}
-
-// export default function createRouter(isSigned = false) {
-//   console.tron.log(`isSigned: ${isSigned}`);
-//   return !isSigned ? (
-//     <StackTeste.Navigator headerMode="none">
-//       <Stack.Screen name="SignIn" component={SignIn} />
-//     </StackTeste.Navigator>
-//   ) : (
-//     <Stack.Navigator headerMode="none">
-//       <Stack.Screen name="Tab" component={Tab} />
-//       <Stack.Screen name="Camera" component={CameraStack} />
-//     </Stack.Navigator>
-//   );
-// }
 
 export default function createRouter(isSigned = false) {
   console.tron.log(`isSigned: ${isSigned}`);
